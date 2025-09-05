@@ -1,7 +1,7 @@
 services:
   # The main Indico container which runs flask
   # The same image is also used to run celery
-  membership-api: &indico-web
+  membership-api:
     build: worker
     command: /opt/membership/run.sh
     restart: unless-stopped
