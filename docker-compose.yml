@@ -1,0 +1,15 @@
+services:
+  # The main Indico container which runs flask
+  # The same image is also used to run celery
+  membership-api: &indico-web
+    build: worker
+    command: /opt/membership/run.sh
+    restart: unless-stopped
+    ports:
+     # The API is accessible directly via localhost:8084.
+      - ${PORT:-8084}:80
+    volumes:
+      - type: bind
+        source: ${OAUTH_CONFIG:-./client_secrets.json}
+        target: /opt/membership/client_secrets.json
+        read_only: true
