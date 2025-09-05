@@ -29,7 +29,7 @@ RUN set -ex && \
     python -m venv ${VIRTUALENV} && \
     ${pip} install --upgrade pip setuptools wheel && \
     ${pip} install -r requirements.txt && \
-    ${pip} install uwsgi \
+    ${pip} install uwsgi
 
 RUN chmod 755 /opt/membership/*.sh
 
