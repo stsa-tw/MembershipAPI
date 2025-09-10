@@ -38,4 +38,4 @@ docker compose up -d
 - `GET /`: Health check endpoint.
 - `GET /me`: Retrieve information about the current bearer token.
 - `GET /get_code`: Get a code for authentication.
-- `GET /verify_code/<code>`: Verify the provided code, returns the user's email & name if valid.
+- `GET /validate_code/<code>`: Verify the provided code, returns the user's email & name if valid.
