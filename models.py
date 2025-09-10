@@ -8,6 +8,13 @@ class MembershipToken:
         self.email = email
         self.username = username
 
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "email": self.email,
+            "username": self.username
+        }
+
     def serialize(self):
         return f"{self.name}|##|{self.email}|##|{self.username}"
 

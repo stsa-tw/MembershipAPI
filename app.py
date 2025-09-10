@@ -55,7 +55,7 @@ def validate_code(code):
         data = redis_client.get(code)
         token = MembershipToken.deserialize(data)
         if token:
-            return jsonify({"token": dict(token), "valid": True})
+            return jsonify({"token": token.to_dict(), "valid": True})
         return jsonify({"error": "Invalid or expired token.", "valid": False}), 400
     except Exception:
         traceback.print_exc()
