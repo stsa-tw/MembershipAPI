@@ -6,6 +6,8 @@ services:
     image: stsatw/membership:latest
     command: /opt/membership/run.sh
     restart: unless-stopped
+    depends_on:
+      - redis
     environment:
       - REDIS_HOST=membership-redis
       - REDIS_PORT=6379

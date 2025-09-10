@@ -1,6 +1,7 @@
 import os
 import random
 import string
+import traceback
 
 import redis
 from authlib.integrations.flask_oauth2 import current_token
@@ -17,8 +18,8 @@ app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
 oidc = OpenIDConnect(app)
-redis_client = redis.Redis(host=os.environ.get('REDIS_HOST', 'localhost'),
-                           port=int(os.environ.get('REDIS_PORT', '6379')), db=0)
+redis_client = redis.Redis(host=os.getenv('REDIS_HOST', default='localhost'),
+                           port=int(os.getenv('REDIS_PORT', default='6379')), db=0, decode_responses=True)
 
 
 @app.route('/')
@@ -51,11 +52,13 @@ def get_code():
 @app.route('/validate_code/<code>')
 def validate_code(code):
     try:
-        token = MembershipToken.deserialize(redis_client.get(code))
+        data = redis_client.get(code)
+        token = MembershipToken.deserialize(data)
         if token:
             return jsonify({"token": dict(token), "valid": True})
         return jsonify({"error": "Invalid or expired token.", "valid": False}), 400
-    except Exception as e:
+    except Exception:
+        traceback.print_exc()
         return jsonify({"error": "Token deserialization error.", "valid": False}), 400
 
 

@@ -13,6 +13,8 @@ class MembershipToken:
 
     @classmethod
     def deserialize(cls, data):
+        if data is None:
+            return None
         try:
             name, email, username = data.split("|##|")
             return cls(name, email, username)
