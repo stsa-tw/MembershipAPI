@@ -1,3 +1,3 @@
 flask
 Flask-OIDC
-Flask-Scheduler
+redis
